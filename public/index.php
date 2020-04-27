@@ -1,3 +1,43 @@
+<?php
+
+require_once '../vendor/autoload.php';
+
+use Entity\Recipe;
+use Entity\User;
+
+
+$user1 = new User();
+$user1->userName = "switco";
+$user1->password = "1234";
+$user1->id = 0;
+
+$user2 = new User();
+$user2->userName = "durdylo";
+$user2->password = "1234";
+$user2->id = 1;
+
+$recipe1 = new Recipe();
+$recipe1->nameRecipe = "fondant au chocolat";
+$recipe1->id = 0;
+$recipe1->typeRecipe = 'dessert';
+$recipe1->description = "fondant au chocolat étoilé";
+$recipe1->image = "https://assets.afcdn.com/recipe/20160331/2847_w800h600c1cx1500cy1000.jpg";
+$recipe1->nbStars = 1;
+$recipe1->user = $user1;
+
+$recipe2 = new Recipe();
+$recipe2->nameRecipe = "coquille st jacques  ";
+$recipe2->id = 1;
+$recipe2->typeRecipe = 'plat principal';
+$recipe2->description = "Coquilles Saint-Jacques et salade de noisettes rôties à la sauce au sirop d’érable";
+$recipe2->image = "https://domaine-montrose.com/wp-content/uploads/2016/05/recette-saint-jacques-domaine-montrose.jpg";
+$recipe2->nbStars = 4;
+$recipe2->user = $user2;
+
+$recipes = array($recipe1, $recipe2);
+?>
+
+
 <!doctype html>
 <html lang="en">
 
@@ -15,7 +55,7 @@
 <body>
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">Devenir un Chef !! </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -49,7 +89,7 @@
       </div>
     </nav>
     <div class="row mt-3">
-      <aside class="col-2">
+      <aside class="col-3">
         <ul class="list-group">
           <li class="list-group-item d-flex justify-content-between align-items-center">
             Mes recettes
@@ -61,45 +101,34 @@
           </li>
         </ul>
       </aside>
-      <section class="col-8">
-        <div class="card col-12 mb-2">
-          <div class="card-body">
-            <h5 class="card-title">Nom de recette </h5>
-            <h6 class="card-subtitle mb-2 text-muted">Nom du chef X étoile(s)</h6>
-            <p class="card-text">Ici je commente mes difficultés et mes conseils</p>
-            <a href="#" class="card-link">categorie étoiles</a>
-            <a href="#" class="card-link">type de plat</a>
+      <section class="col-6">
+        <?php
+        foreach ($recipes as $key => $recipe) {
+          # code...
+          //var_dump($recipe);
+          $userRecipe = $recipe->user;
+        ?>
+          <div class="card mb-2">
+            <img src=" <?php echo $recipe->image; ?> " class="card-img-top" alt="...">
+            <div class="card-body">
+              <h5 class="card-title"><?php echo $recipe->nameRecipe; ?></h5>
+              <h6 class="card-subtitle mb-2 text-muted"><?php echo $userRecipe->userName; ?></h6>
+              <p class="card-text"><?php echo $recipe->description; ?></p>
+              <a href="#" class="card-link"><?php
+                                            if ($recipe->nbStars > 1) {
+                                              echo $recipe->nbStars . " étoiles";
+                                            } else {
+                                              echo $recipe->nbStars . " étoile";
+                                            } ?></a>
+              <a href="#" class="card-link"><?php echo $recipe->typeRecipe; ?></a>
+            </div>
           </div>
-        </div>
-        <div class="card col-12 mb-2">
-          <div class="card-body">
-            <h5 class="card-title">Nom de recette </h5>
-            <h6 class="card-subtitle mb-2 text-muted">Nom du chef X étoile(s)</h6>
-            <p class="card-text">Ici je commente mes difficultés et mes conseils</p>
-            <a href="#" class="card-link">categorie étoiles</a>
-            <a href="#" class="card-link">type de plat</a>
-          </div>
-        </div>
-        <div class="card col-12 mb-2">
-          <div class="card-body">
-            <h5 class="card-title">Nom de recette </h5>
-            <h6 class="card-subtitle mb-2 text-muted">Nom du chef X étoile(s)</h6>
-            <p class="card-text">Ici je commente mes difficultés et mes conseils</p>
-            <a href="#" class="card-link">categorie étoiles</a>
-            <a href="#" class="card-link">type de plat</a>
-          </div>
-        </div>
-        <div class="card col-12 mb-2">
-          <div class="card-body">
-            <h5 class="card-title">Nom de recette </h5>
-            <h6 class="card-subtitle mb-2 text-muted">Nom du chef X étoile(s)</h6>
-            <p class="card-text">Ici je commente mes difficultés et mes conseils</p>
-            <a href="#" class="card-link">categorie étoiles</a>
-            <a href="#" class="card-link">type de plat</a>
-          </div>
-        </div>
+        <?php
+        }
+        ?>
+
       </section>
-      <aside class="col-2">
+      <aside class="col-3">
         <ul class="list-group">
           <li class="list-group-item d-flex justify-content-between align-items-center">
             Apero
