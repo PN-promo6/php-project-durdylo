@@ -5,7 +5,6 @@ require_once '../vendor/autoload.php';
 use Entity\Recipe;
 use Entity\User;
 
-
 $user1 = new User();
 $user1->userName = "switco";
 $user1->password = "1234";
@@ -15,6 +14,11 @@ $user2 = new User();
 $user2->userName = "durdylo";
 $user2->password = "1234";
 $user2->id = 1;
+
+$user3 = new User();
+$user3->userName = "uhano";
+$user3->password = "1234";
+$user3->id = 2;
 
 $recipe1 = new Recipe();
 $recipe1->nameRecipe = "fondant au chocolat";
@@ -34,7 +38,16 @@ $recipe2->image = "https://domaine-montrose.com/wp-content/uploads/2016/05/recet
 $recipe2->nbStars = 4;
 $recipe2->user = $user2;
 
-$recipes = array($recipe1, $recipe2);
+$recipe3 = new Recipe();
+$recipe3->nameRecipe = "Blanquette de veau aux cèpes";
+$recipe3->id = 2;
+$recipe3->typeRecipe = 'plat principal';
+$recipe3->description = "Blanquette-de-veau-aux-cepes-gastronomique";
+$recipe3->image = "https://couteaux-et-tirebouchons.com/wp-content/uploads/2016/10/Blanquette-de-veau-aux-cepes-gastronomique.jpg";
+$recipe3->nbStars = 2;
+$recipe3->user = $user3;
+
+$recipes = array($recipe1, $recipe2, $recipe3);
 ?>
 
 
@@ -101,19 +114,20 @@ $recipes = array($recipe1, $recipe2);
           </li>
         </ul>
       </aside>
-      <section class="col-6">
+      <section class="row col-6">
         <?php
         foreach ($recipes as $key => $recipe) {
           # code...
           //var_dump($recipe);
           $userRecipe = $recipe->user;
         ?>
-          <div class="card mb-2">
+          <div class="card col-6 mb-2">
             <img src=" <?php echo $recipe->image; ?> " class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title"><?php echo $recipe->nameRecipe; ?></h5>
               <h6 class="card-subtitle mb-2 text-muted"><?php echo $userRecipe->userName; ?></h6>
               <p class="card-text"><?php echo $recipe->description; ?></p>
+
               <a href="#" class="card-link"><?php
                                             if ($recipe->nbStars > 1) {
                                               echo $recipe->nbStars . " étoiles";
@@ -121,6 +135,7 @@ $recipes = array($recipe1, $recipe2);
                                               echo $recipe->nbStars . " étoile";
                                             } ?></a>
               <a href="#" class="card-link"><?php echo $recipe->typeRecipe; ?></a>
+
             </div>
           </div>
         <?php
