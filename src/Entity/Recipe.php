@@ -2,6 +2,9 @@
 
 namespace Entity;
 
+use ludk\Utils\Serializer;
+
+
 class Recipe
 {
     public $nameRecipe;
@@ -11,4 +14,5 @@ class Recipe
     public $image;
     public $nbStars;
     public User $user;
+    use Serializer;
 }

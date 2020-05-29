@@ -1,0 +1,29 @@
+[
+    {
+        "nameRecipe": "fondant au chocolat",
+        "id": 0,
+        "typeRecipe": "dessert",
+        "description": "fondant au chocolat étoilé",
+        "image": "https://assets.afcdn.com/recipe/20160331/2847_w800h600c1cx1500cy1000.jpg",
+        "nbStars": 1,
+        "user": 0
+    },
+    {
+        "nameRecipe": "coquille st jacques",
+        "id": 1,
+        "typeRecipe": "plat principal",
+        "description": "Coquilles Saint-Jacques et salade de noisettes rôties à la sauce au sirop d’érable",
+        "image": "https://domaine-montrose.com/wp-content/uploads/2016/05/recette-saint-jacques-domaine-montrose.jpg",
+        "nbStars": 4,
+        "user": 1
+    },
+    {
+        "nameRecipe": "Blanquette de veau aux cèpes",
+        "id": 2,
+        "typeRecipe": "plat principal",
+        "description": "Blanquette-de-veau-aux-cepes-gastronomique",
+        "image": "https://couteaux-et-tirebouchons.com/wp-content/uploads/2016/10/Blanquette-de-veau-aux-cepes-gastronomique.jpg",
+        "nbStars": 2,
+        "user": 2
+    }
+]
