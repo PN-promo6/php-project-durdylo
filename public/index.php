@@ -85,12 +85,12 @@ if (isset($_GET['search'])) {
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link rel="stylesheet" href="css/style.css">
-  <title>Devenez un chef</title>
+  <title>Devenir un chef</title>
 </head>
 
 <body>
-  <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
       <a class="navbar-brand" href="#">Devenir un Chef !! </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -123,9 +123,12 @@ if (isset($_GET['search'])) {
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
-    </nav>
+    </div>
+  </nav>
+  <div class="container">
+
     <div class="row mt-3">
-      <aside class="col-3">
+      <aside class="col-lg-3">
         <ul class="list-group">
           <li class="list-group-item d-flex justify-content-between align-items-center">
             Mes recettes
@@ -137,7 +140,7 @@ if (isset($_GET['search'])) {
           </li>
         </ul>
       </aside>
-      <section class="row col-6">
+      <section class="row col-lg-6 p-0">
         <?php
         foreach ($recipes as $key => $recipe) {
           # code...
@@ -145,7 +148,7 @@ if (isset($_GET['search'])) {
           $userRecipe = $recipe->user;
 
         ?>
-          <div class="card col-6 mb-2">
+          <div class="card col-lg-6 mb-2">
             <img src=" <?php echo $recipe->image; ?> " class="card-img-top" alt="...">
             <div class="card-body">
               <h5 class="card-title"><?php echo $recipe->nameRecipe; ?></h5>
@@ -167,7 +170,7 @@ if (isset($_GET['search'])) {
         ?>
 
       </section>
-      <aside class="col-3">
+      <aside class="col-lg-3">
         <ul class="list-group">
           <li class="list-group-item d-flex justify-content-between align-items-center">
             Apero
