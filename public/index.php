@@ -8,12 +8,12 @@ use Entity\Recipe;
 use ludk\Persistence\ORM;
 
 $orm = new ORM(__DIR__ . '/../Resources');
-$codeRepo = $orm->getRepository(Recipe::class);
-$recipes = $codeRepo->findAll();
+$recipeRepo = $orm->getRepository(Recipe::class);
+$recipes = $recipeRepo->findAll();
 $recipe0 = $recipes[0];
 $manager = $orm->getManager();
-
-// $recipe1 = $codeRepo->find(1);
+// //modifie le titre d'un recipe
+// $recipe1 = $recipeRepo->find(1);
 // $recipe1->nameRecipe = "nouveau titre";
 // $manager->persist($recipe1);
 // $manager->flush();
@@ -23,9 +23,21 @@ $manager = $orm->getManager();
 
 
 if (isset($_GET['search'])) {
-  $recipes = $codeRepo->findBy(array('description' => $_GET['search']));
+  $search = $_GET['search'];
+  if (strpos($search, "@") === 0) {
+    $userRepo = $orm->getRepository(User::class);
+    $userName = substr($search, 1);
+    $users = $userRepo->findBy(array('userName' => $userName));
+    if (count($users) == 1) {
+      # code...
+      $user = $users[0];
+      $recipes = $recipeRepo->findBy(array('user' => $user->id));
+    }
+  } else {
+    $recipes = $recipeRepo->findBy(array('description' => $search));
+  }
 } else {
-  $recipes = $codeRepo->findAll();
+  $recipes = $recipeRepo->findAll();
 }
 ?>
 
@@ -97,7 +109,9 @@ if (isset($_GET['search'])) {
         </ul>
       </aside>
       <section class="row col-lg-6 p-0">
+
         <?php
+
         foreach ($recipes as $key => $recipe) {
           # code...
           //var_dump($recipe);
@@ -108,7 +122,7 @@ if (isset($_GET['search'])) {
             <img src=" <?php echo $recipe->image; ?> " class="card-img" alt="...">
             <div class="card-body">
               <h5 class="card-title"><?php echo $recipe->nameRecipe; ?></h5>
-              <h6 class="card-subtitle mb-2 text-muted"><?php echo $userRecipe->userName; ?></h6>
+              <h6 class="card-subtitle mb-2 text-muted"> <a href="?search=@<?php echo $userRecipe->userName ?> "><?php echo '@' . $userRecipe->userName; ?></a></h6>
               <p class="card-text"><?php echo $recipe->description; ?></p>
 
               <a href="#" class="card-link"><?php
