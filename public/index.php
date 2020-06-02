@@ -1,6 +1,7 @@
 <?php
 
 require_once '../vendor/autoload.php';
+session_start();
 
 use Entity\User;
 use Entity\Recipe;
@@ -10,6 +11,13 @@ $orm = new ORM(__DIR__ . '/../Resources');
 $codeRepo = $orm->getRepository(Recipe::class);
 $recipes = $codeRepo->findAll();
 $recipe0 = $recipes[0];
+$manager = $orm->getManager();
+
+// $recipe1 = $codeRepo->find(1);
+// $recipe1->nameRecipe = "nouveau titre";
+// $manager->persist($recipe1);
+// $manager->flush();
+
 //var_dump($recipe0->user->userName);
 //var_dump($recipes);
 
@@ -19,58 +27,6 @@ if (isset($_GET['search'])) {
 } else {
   $recipes = $codeRepo->findAll();
 }
-
-//$recipe0 = $recipes[0];
-// var_dump($recipe->user->userName);
-
-
-// use Entity\Recipe;
-// use Entity\User;
-
-// $user1 = new User();
-// $user1->userName = "switco";
-// $user1->password = "1234";
-// $user1->id = 0;
-
-// $user2 = new User();
-// $user2->userName = "durdylo";
-// $user2->password = "1234";
-// $user2->id = 1;
-
-// $user3 = new User();
-// $user3->userName = "uhano";
-// $user3->password = "1234";
-// $user3->id = 2;
-
-// $recipe1 = new Recipe();
-// $recipe1->nameRecipe = "fondant au chocolat";
-// $recipe1->id = 0;
-// $recipe1->typeRecipe = 'dessert';
-// $recipe1->description = "fondant au chocolat étoilé";
-// $recipe1->image = "https://assets.afcdn.com/recipe/20160331/2847_w800h600c1cx1500cy1000.jpg";
-// $recipe1->nbStars = 1;
-// $recipe1->user = $user1;
-
-// $recipe2 = new Recipe();
-// $recipe2->nameRecipe = "coquille st jacques";
-// $recipe2->id = 1;
-// $recipe2->typeRecipe = 'plat principal';
-// $recipe2->description = "Coquilles Saint-Jacques et salade de noisettes rôties à la sauce au sirop d’érable";
-// $recipe2->image = "https://domaine-montrose.com/wp-content/uploads/2016/05/recette-saint-jacques-domaine-montrose.jpg";
-// $recipe2->nbStars = 4;
-// $recipe2->user = $user2;
-
-// $recipe3 = new Recipe();
-// $recipe3->nameRecipe = "Blanquette de veau aux cèpes";
-// $recipe3->id = 2;
-// $recipe3->typeRecipe = 'plat principal';
-// $recipe3->description = "Blanquette-de-veau-aux-cepes-gastronomique";
-// $recipe3->image = "https://couteaux-et-tirebouchons.com/wp-content/uploads/2016/10/Blanquette-de-veau-aux-cepes-gastronomique.jpg";
-// $recipe3->nbStars = 2;
-// $recipe3->user = $user3;
-
-// $recipes = array($recipe1, $recipe2, $recipe3);
-
 ?>
 
 
@@ -149,7 +105,7 @@ if (isset($_GET['search'])) {
 
         ?>
           <div class="card col-lg-6 mb-2">
-            <img src=" <?php echo $recipe->image; ?> " class="card-img-top" alt="...">
+            <img src=" <?php echo $recipe->image; ?> " class="card-img" alt="...">
             <div class="card-body">
               <h5 class="card-title"><?php echo $recipe->nameRecipe; ?></h5>
               <h6 class="card-subtitle mb-2 text-muted"><?php echo $userRecipe->userName; ?></h6>

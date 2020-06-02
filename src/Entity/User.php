@@ -8,8 +8,8 @@ use ludk\Utils\Serializer;
 class User
 {
 
-   public $userName;
-   public  $id;
-   public  $password;
+   public string $userName;
+   public  int $id;
+   public string $password;
    use Serializer;
 }
