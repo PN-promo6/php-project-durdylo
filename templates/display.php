@@ -54,6 +54,7 @@
                         Déssert
                     </li>
                 </ul>
+                <?php include 'addRecipe.php' ?>
             </aside>
 
         </div>
