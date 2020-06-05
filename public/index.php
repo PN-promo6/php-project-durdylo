@@ -6,6 +6,9 @@ session_start();
 use Entity\User;
 use Entity\Recipe;
 use ludk\Persistence\ORM;
+use Controller\AuthController;
+use Controller\HomeController;
+use Controller\RecipeController;
 
 $orm = new ORM(__DIR__ . '/../Resources');
 $recipeRepo = $orm->getRepository(Recipe::class);
@@ -27,90 +30,25 @@ $manager = $orm->getManager();
 $action = $_GET["action"] ?? "display";
 switch ($action) {
   case 'register':
-    if (isset($_POST['username']) && isset($_POST['password']) && isset($_POST['passwordRetype'])) {
-      $errorMsg = NULL;
-      $users = $userRepo->findBy(array("userName" => $_POST['username']));
-
-      if (count($users) > 0) {
-        $errorMsg = "Nickname already used.";
-      } else if ($_POST['password'] != $_POST['passwordRetype']) {
-        $errorMsg = "Passwords are not the same.";
-      } else if (strlen(trim($_POST['password'])) < 8) {
-        $errorMsg = "Your password should have at least 8 characters.";
-      } else if (strlen(trim($_POST['username'])) < 4) {
-        $errorMsg = "Your nickame should have at least 4 characters.";
-      }
-      if ($errorMsg) {
-        include "../templates/registerForm.php";
-      } else {
-        // $userId = CreateNewUser($_POST['username'], $_POST['password']);
-        $user = new User();
-        $user->userName = $_POST['username'];
-        $user->password = $_POST['password'];
-        $manager->persist($user);
-        $manager->flush();
-        $_SESSION['user'] = $user;
-        header('Location: ?action=display');
-      }
-    } else {
-      include "../templates/registerForm.php";
-    }
+    $authController = new AuthController();
+    $authController->register();
     break;
   case 'logout':
-    if (isset($_SESSION['user'])) {
-      unset($_SESSION['user']);
-    }
-    header('Location: ?action=display');
+    $authController = new AuthController();
+    $authController->logout();
     break;
   case 'login':
-    if (isset($_POST['username']) && isset($_POST['password'])) {
-      $users = $userRepo->findBy(array("userName" => $_POST['username'], "password" => $_POST['password']));
-      if (count($users) == 1) {
-        $_SESSION['user'] = $users[0];
-        header('Location: ?action=display');
-      } else {
-        $errorMsg = "Wrong login and/or password.";
-        include "../templates/LoginForm.php";
-      }
-    } else {
-      include "../templates/LoginForm.php";
-    }
+    $authController = new AuthController();
+    $authController->login();
     break;
   case 'new':
-    if (isset($_SESSION['user']) && isset($_POST['nameRecipe']) && isset($_POST['description']) && isset($_POST['typeRecipe']) && isset($_POST['nbStars']) && isset($_POST['image'])) {
-      $newrecipe = new Recipe();
-      $newrecipe->user = $_SESSION['user'];
-      $newrecipe->nameRecipe = $_POST['nameRecipe'];
-      $newrecipe->description = $_POST['description'];
-      $newrecipe->typeRecipe = $_POST['typeRecipe'];
-      $newrecipe->nbStars = $_POST['nbStars'];
-      $newrecipe->image = $_POST['image'];
-      $manager->persist($newrecipe);
-      $manager->flush();
-      header('Location: ?action=display');
-    } else {
-      $errorMsg = "Certains des champs ne sont pas remplis";
-    }
+    $recipeController = new RecipeController();
+    $recipeController->createRecipe();
     break;
   case 'display':
   default:
-    if (isset($_GET['search'])) {
-      $search = $_GET['search'];
-      if (strpos($search, "@") === 0) {
-        $userName = substr($search, 1);
-        $users = $userRepo->findBy(array('userName' => $userName));
-        if (count($users) == 1) {
-          # code...
-          $user = $users[0];
-          $recipes = $recipeRepo->findBy(array('user' => $user->id));
-        }
-      } else {
-        $recipes = $recipeRepo->findBy(array('description' => $search));
-      }
-    } else {
-      $recipes = $recipeRepo->findAll();
-    }
-    include "../templates/display.php";
+    $homeController = new HomeController();
+    $homeController->display();
 
     break;
 }
