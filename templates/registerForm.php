@@ -5,7 +5,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-5">
-            <form class="form-signin" method="POST" action="?action=register">
+            <form class="form-signin" method="POST" action="/register">
                 <h2 class="form-signin-heading">REGISTRATION</h2>
                 <?php
                 if (isset($errorMsg)) {

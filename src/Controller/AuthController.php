@@ -14,7 +14,7 @@ class AuthController
             $users = $userRepo->findBy(array("userName" => $_POST['username'], "password" => $_POST['password']));
             if (count($users) == 1) {
                 $_SESSION['user'] = $users[0];
-                header('Location: ?action=display');
+                header('Location: /display');
             } else {
                 $errorMsg = "Wrong login and/or password.";
                 include "../templates/LoginForm.php";
@@ -28,7 +28,7 @@ class AuthController
         if (isset($_SESSION['user'])) {
             unset($_SESSION['user']);
         }
-        header('Location: ?action=display');
+        header('Location: /display');
     }
     public function register()
     {
@@ -57,7 +57,7 @@ class AuthController
                 $manager->persist($user);
                 $manager->flush();
                 $_SESSION['user'] = $user;
-                header('Location: ?action=display');
+                header('Location: /display');
             }
         } else {
             include "../templates/registerForm.php";

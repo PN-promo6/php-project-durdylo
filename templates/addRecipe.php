@@ -5,7 +5,7 @@
     <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
         ajouter une recette
     </button>
-    <form class="form-signin collapse" id="collapseExample" method="post" action="?action=new">
+    <form class="form-signin collapse" id="collapseExample" method="post" action="/new">
         <?php
         if (isset($errorMsg)) {
             echo "<div class='alert alert-warning' role='alert'>$errorMsg</div>";

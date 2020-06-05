@@ -19,7 +19,7 @@ class RecipeController
             $newrecipe->image = $_POST['image'];
             $manager->persist($newrecipe);
             $manager->flush();
-            header('Location: ?action=display');
+            header('Location: /display');
         } else {
             $errorMsg = "Certains des champs ne sont pas remplis";
         }
